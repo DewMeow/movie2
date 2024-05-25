@@ -1,0 +1,119 @@
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Abril Fatface", serif;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(223, 28, 224, 1) 0%,
+    rgba(8, 34, 137, 1) 100%,
+    rgba(6, 78, 166, 1) 100%,
+    rgba(0, 212, 255, 1) 100%
+  );
+}
+
+.header {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  height: 60px;
+}
+
+.header__logo {
+  font-size: 32px;
+  text-decoration: none;
+  color: aliceblue;
+}
+
+.header__search {
+  padding: 8px;
+  border: 2px solid white;
+  border-radius: 20px;
+  outline: none;
+}
+
+.movies {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.movie {
+  width: 240px;
+  margin: 10px;
+  position: relative;
+}
+
+.movie__cover-inner {
+  position: relative;
+  height: 360px;
+}
+
+.movie__cover {
+  max-width: 100%;
+  height: 100%;
+}
+
+.movie__cover--darkened {
+  background-color: rgb(110, 19, 77);
+  opacity: 0.3;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  max-width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.movie__cover--darkened:hover {
+  background-color: gray;
+  cursor: pointer;
+}
+
+.movie__info {
+  padding: 10px 0px;
+}
+
+.movie__title {
+  font-size: 16px;
+  color: aliceblue;
+}
+
+.movie__category {
+  font-size: 14px;
+  color: #ffd80e;
+}
+
+.pagination {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #0056b3;
+}

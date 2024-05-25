@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search By Movies</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="header__content">
+        <a class="header__logo" href="index.html">Search By Movies</a>
+        <form>
+          <input class="header__search" type="text" placeholder="Search" />
+        </form>
+      </div>
+    </header>
+
+    <div class="header">
+      <div class="movies"></div>
+    </div>
+
+    <div class="pagination">
+      <button onclick="previousPage()">Previous</button>
+      <button onclick="nextPage()">Next</button>
+    </div>
+
+    <script src="./js/index.js"></script>
+  </body>
+</html>
