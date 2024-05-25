@@ -1,26 +1,68 @@
+class MovieService {
+  constructor(apiKey) {
+    this.apiKey = apiKey;
+    this.baseURL = "https://kinopoiskapiunofficial.tech/api/";
+  }
+
+  async searchMoviesByKeyword(keyword, page = 1) {
+    try {
+      const url = `${this.baseURL}v2.1/films/search-by-keyword?keyword=${keyword}&page=${page}`;
+      const response = await fetch(url, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-KEY": this.apiKey,
+        },
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error searching movies:", error);
+      throw error;
+    }
+  }
+
+  async getPremiereMovies(year, month, page = 1) {
+    try {
+      const url = `${this.baseURL}v2.1/films/premieres?year=${year}&month=${month}&page=${page}`;
+      const response = await fetch(url, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-KEY": this.apiKey,
+        },
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error getting premiere movies:", error);
+      throw error;
+    }
+  }
+}
+
 const API_KEY = "4521a67b-3a33-44bf-b107-6747f1e3e709";
-const API_URL_PREMIERES =
-  "https://kinopoiskapiunofficial.tech/api/v2.2/films/premieres?year=2024&month=JANUARY";
-const API_URL_SEARCH =
-  "https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=";
+const movieService = new MovieService(API_KEY);
 
-let currentPage = 1;
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const keyword = search.value.trim();
+  if (keyword) {
+    currentPage = 1;
+    try {
+      const searchData = await movieService.searchMoviesByKeyword(keyword);
+      showMovies(searchData);
+    } catch (error) {
+      console.error("Error searching movies:", error);
+    }
+    search.value = "";
+  }
+});
 
-getMovies(API_URL_PREMIERES);
-
-async function getMovies(URL, page = 1) {
+async function getPremiereMovies() {
   try {
-    const resp = await fetch(`${URL}&page=${page}`, {
-      headers: {
-        "Content-Type": "application/json",
-        "X-API-KEY": API_KEY,
-      },
-    });
-    const respData = await resp.json();
-    showMovies(respData);
-    console.log(respData);
+    const premiereData = await movieService.getPremiereMovies(2024, "JANUARY");
+    showMovies(premiereData);
   } catch (error) {
-    console.error("Error fetching movies:", error);
+    console.error("Error getting premiere movies:", error);
   }
 }
 
@@ -51,29 +93,34 @@ function showMovies(data) {
   });
 }
 
-const form = document.querySelector("form");
-const search = document.querySelector(".header__search");
-
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const apiSearchUrl = `${API_URL_SEARCH}${search.value}`;
-  if (search.value) {
-    currentPage = 1;
-    getMovies(apiSearchUrl);
-    search.value = "";
-  }
-});
-
 function nextPage() {
   currentPage++;
-  const apiSearchUrl = `${API_URL_SEARCH}${search.value}`;
-  getMovies(apiSearchUrl, currentPage);
+  const keyword = search.value.trim();
+  if (keyword) {
+    try {
+      movieService
+        .searchMoviesByKeyword(keyword, currentPage)
+        .then(showMovies)
+        .catch((error) => console.error("Error fetching movies:", error));
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+    }
+  }
 }
 
 function previousPage() {
   if (currentPage > 1) {
     currentPage--;
-    const apiSearchUrl = `${API_URL_SEARCH}${search.value}`;
-    getMovies(apiSearchUrl, currentPage);
+    const keyword = search.value.trim();
+    if (keyword) {
+      try {
+        movieService
+          .searchMoviesByKeyword(keyword, currentPage)
+          .then(showMovies)
+          .catch((error) => console.error("Error fetching movies:", error));
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+      }
+    }
   }
 }
